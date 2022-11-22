@@ -1,4 +1,4 @@
-const { User, Room, UserRoom, BasketDevice, Device, Basket} = require("../models/models");
+const { User, Room, UserRoom} = require("../models/models");
 const ApiError = require("../error/ApiError");
 
 const users = [];
@@ -20,18 +20,16 @@ const addUser = async ({ socketId, email, name, room }) => {
 
         if ( !user2 ) return { error: 'User with this email not found' };
 
-
         let room1 = await Room.findOne( { where: { name: room } } );
         if ( !room1 ) {
             room1 = await Room.create( { name: room } )
         }
 
-
         let existingUser1 = await UserRoom.findOne( { where: { userId: user2.id, roomId: room1.id } } );
 
         if(!email || !name || !room) return { error: 'Username, email and room are required.' };
 
-        if(existingUser1) return { error: 'Username is taken.' };
+        if(existingUser1) return { error: 'Username is taken111.' };
 
         existingUser1 = await UserRoom.create( {userId: user2.id, roomId: room1.id} );
 

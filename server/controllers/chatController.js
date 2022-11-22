@@ -41,14 +41,13 @@ class ChatController {
 
             socket.on('join', async ({ email, name, room }, callback) => {
 
-/*                try {*/
+                // try {
                     const { error, user } = await addUser({ socketId: socket.id, email, name, room });
                     console.log('***user= ', user);
 
                     if(error) return callback(error);
 
                     userId = user.id;
-
 
                     socket.join(user.room);
 
@@ -61,35 +60,16 @@ class ChatController {
                     io.to(user.room).emit('roomData', { room: user.room, users: users });
 
                     callback();
-                /*} catch (e) {
-                    console.log(2);
-                    console.log('Ошибка catch 2 : ', e.message);
-                    return callback(e.message);
-                };*/
+                 // catch (e) {
+                 //    console.log(2);
+                 //    console.log('Ошибка catch 2 : ', e.message);
+                 //    return callback(e.message);
+                // };
 
 
 //                console.log('Принимаем на сервере имя и комнату из события join созданного на клиенте  !', name, room);
 
-/*                const { error, user } = await addUser({ socketId: socket.id, email, name, room });
-                console.log('***user= ', user);
 
-
-                if(error) return callback(error.message);
-
-                userId = user.id;
-
-
-                socket.join(user.room);
-
-                socket.emit('message', { userId: user.id, roomName: user.room, user: 'admin', text: `${user.name}, welcome to ${user.room}.`});
-                socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has joined!` });
-
-                let users = await getUsersInRoom(user.room);
-                console.log('***users= ' , users);
-
-                io.to(user.room).emit('roomData', { room: user.room, users: users });
-
-                callback();*/
             });
 
             socket.on('sendMessage', async (message, callback) => {
@@ -133,7 +113,6 @@ class ChatController {
             })
         });
     }
-
 }
 
 module.exports = new ChatController()
