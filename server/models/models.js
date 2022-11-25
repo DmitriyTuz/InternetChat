@@ -20,7 +20,7 @@ const Room = sequelize.define('room', {
 
 const Message = sequelize.define('message', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    text: {type: DataTypes.STRING, unique: true, allowNull: false}
+    text: {type: DataTypes.STRING, allowNull: false}
 })
 
 
