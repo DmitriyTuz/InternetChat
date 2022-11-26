@@ -85,19 +85,20 @@ class ChatController {
 
                 console.log('!!!!! socet.id = ', socket.id);
 
-                let user1 = await removeUser(socket.id);
-                let users = await getUsersInRoom(user1.room)
+                const user = await getUser(socket.id);
+                await removeUser(socket.id);
+                let users = await getUsersInRoom(user.room)
 
-                if (user1) {
-                    console.log('***user.room = ', user1.room);
-                    console.log('***user.name = ', user1.name);
+                if (user) {
+                    console.log('***user.room = ', user.room);
+                    console.log('***user.name = ', user.name);
 
-                    socket.join(user1.room)
+                    socket.join(user.room)
 
-                    socket.emit('message', { user: 'Admin', text: `${user1.name} has left.` });
-                    socket.broadcast.to(user1.room).emit('message', {userId: user1.id, roomName: user1.room, user: 'admin', text: `${user1.name} has left!` });
+                    socket.emit('message', { user: 'Admin', text: `${user.name} has left.` });
+                    socket.broadcast.to(user.room).emit('message', {userId: user.id, roomName: user.room, user: 'admin', text: `${user.name} has left!` });
 
-                    io.to(user1.room).emit('roomData', { room: user1.room, users: users });
+                    io.to(user.room).emit('roomData', { room: user.room, users: users });
 
                     // io.to(user1.room).emit('message', { user: 'Admin', text: `${user1.name} has left.` });
                     // io.to(user1.room).emit('roomData', { room: user1.room, users: getUsersInRoom(user1.room)});

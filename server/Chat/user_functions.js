@@ -52,34 +52,13 @@ const removeUser = async (socketId) => {
             }
     })
 
-    let userRoom = await UserRoom.findOne({
-        where:
-            {
-                userId: user.id
-            }
-    })
-
-    let room1 = await Room.findOne({
-        where:
-            {
-                id: userRoom.roomId
-            }
-    })
-
     await UserRoom.destroy({
         where: {
             userId: user.id
         }
     })
 
-    let id = user.id
-    let name = user.name
-    let room = room1.name
-    console.log('!!!! name = ', name)
-    console.log('!!!! room = ', room)
-    const user1 = { id, name, room }
-    console.log('!!!! user1 = ', user1)
-    return user1
+    return user
 }
 
 const getUser = async (socketId) => {
@@ -106,7 +85,8 @@ const getUser = async (socketId) => {
 
 const getUsersInRoom = async (room) => {
 
-    let users = await User.findAll(
+    let users
+    users = await User.findAll(
 
         {attributes: ["id","name","email"],
             include: [{
@@ -116,7 +96,6 @@ const getUsersInRoom = async (room) => {
             }]
         }
 )
-
     return users;
 }
 
