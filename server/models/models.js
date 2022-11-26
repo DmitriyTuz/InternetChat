@@ -27,8 +27,6 @@ const Message = sequelize.define('message', {
 User.hasMany(Message, { onDelete: "cascade" })
 Message.belongsTo(User)
 
-//db.food.hasMany(db.meal, {as : 'Food', foreignKey : 'idFood'});
-
 Room.hasMany(Message, { onDelete: "cascade" })
 Message.belongsTo(Room)
 
